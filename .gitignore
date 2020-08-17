@@ -1,0 +1,33 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+# Jupyter notebook
+.ipynb_checkpoints
+
+# HDF5 files
+*.h5
+
+# File format for graphs
+*.graphml
+
+# Comma separated values
+*.csv
+
+# Excel files
+*.xlsx
+
+# Python pickle files
+*.pkl
+
+# Netcdf files
+*.nc
+
+# R history
+.Rhistory
+
+*.[oa]
+*~
+
+# Compacted files
+*.zip
