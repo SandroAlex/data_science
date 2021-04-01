@@ -1,0 +1,693 @@
+\documentclass[11pt]{beamer}
+
+\mode<presentation> {
+  \usetheme{Singapore} 
+  \usecolortheme{seagull}
+  \setbeamertemplate{section in toc}[ball unnumbered]
+  \setbeamerfont{section in toc}{size=\scriptsize}
+  \setbeamertemplate{subsection in toc}[ball unnumbered]
+  \setbeamerfont{subsection in toc}{size=\scriptsize}
+  \usebeamercolor[fg]{page number in head/foot}
+  \setbeamertemplate{footline}[page number]
+  \setbeamerfont{page number in head/foot}{size=\large}
+  \setbeamercolor{page number in head/foot}{fg=black}
+  \setbeamercolor{block title}{bg=blue!50, fg=black}
+  \setbeamertemplate{navigation symbols}{}
+}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{newverbs}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel}
+\usepackage{amsmath}
+\usepackage[style=authoryear]{biblatex}
+\usepackage{xcolor}
+\usepackage{anyfontsize}
+\usepackage{amsfonts}
+\usepackage{listings}
+\usepackage{amssymb}
+\usepackage{url}
+\usepackage[version=3]{mhchem}
+\usepackage{caption}
+\usepackage{multirow}
+\usepackage{amsthm}
+\usepackage{pythonhighlight}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{bm}
+\usetikzlibrary{arrows, automata}
+\graphicspath{
+  {/home/alex/Dropbox/doutorado/figuras/}
+  {/home/alex/Dropbox/repositories/phd/images/}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  filecolor=cyan,      
+  urlcolor=magenta,
+}
+
+\newcommand{\btVFill}{\vskip0pt plus 1filll}
+
+\usepackage{ragged2e}
+\justifying
+\renewcommand{\raggedright}{\leftskip=0pt \rightskip=0pt plus 0cm}
+\addtobeamertemplate{block begin}{}{\justifying\setlength{\parindent}{2em}}
+
+\newverbcommand{\bverb}{\color{blue}}{}
+\newverbcommand{\gverb}{\color{green}}{}
+\newverbcommand{\kverb}{\color{black}}{}
+\newverbcommand{\rverb}{\color{red}}{}
+
+\makeatletter
+\newlength\beamerleftmargin
+\setlength\beamerleftmargin{\Gm@lmargin}
+\makeatother
+
+% João (1988)
+\newcommand{\citatu}[2]{\textbf{\textcolor{blue}{#1 (#2)}}}        
+
+% (João, 1988)
+\newcommand{\citapu}[2]{\textbf{\textcolor{blue}{(#1, #2)}}}       
+
+ % João et al. (1988)
+\newcommand{\citat}[2]{\textbf{\textcolor{blue}{#1 et al. (#2)}}}
+
+% (João et al., 1988)
+\newcommand{\citap}[2]{\textbf{\textcolor{blue}{(#1 et al., #2)}}} 
+
+ % João et al., 1988 [Para citar varios]
+\newcommand{\citav}[2]{\textbf{\textcolor{blue}{#1 et al., #2}}}
+
+ % João, 1988 [Para citar varios]
+\newcommand{\citavu}[2]{\textbf{\textcolor{blue}{#1, #2}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\title[
+  \textbf{\textcolor{blue}{
+    Presentation
+  }} 
+]{\\[0.01cm]
+  \large{\textbf{\textcolor{black}{
+    Technical Assessment
+  }}} \\
+  
+  \small{\textcolor{black}{
+    \emph{Presentation}
+  }} \\[0.50cm]
+
+  \large{\textbf{\textcolor{black}{
+	  Credit Card Fraud Detection
+  }}} \\
+    \small{Anonymized Genuine and Fraudulent Credit Card Transactions}
+} 
+
+\author{
+  \textcolor{black}{\textbf{
+      Alex Sandro Alves de Araujo 
+  }} \\
+    \small{Data Science}
+} 
+
+\institute[
+  University of São Paulo - Physics Institute
+]{
+  \textcolor{black}{
+    University of São Paulo - Physics Institute \\ 
+    \medskip
+    \url{alex.fate2000@gmail.com}
+  }
+}
+
+\date{
+  \textcolor{black}{
+    \today
+  }
+}
+
+% % Template for slide.
+% %%%%%%%%%% Slide number %%%%%%%%%%
+% \begin{frame}[fragile]
+%   \frametitle{\normalsize{\textbf{
+%     Title
+%   }}} 
+%
+%   \scriptsize{  
+%
+%   }
+% \end{frame}
+
+%%%%%%%%%% Slide 1 %%%%%%%%%%
+{
+  \usebackgroundtemplate{
+    \centering
+    \includegraphics[
+      width=\paperwidth, height=0.92\paperheight
+    ]{background.jpg}
+  }
+  \begin{frame}
+    \titlepage 
+  \end{frame}
+}
+
+%%%%%%%%%% Slide 2 %%%%%%%%%%
+\begin{frame}
+  \frametitle{\normalsize{\textbf{
+    Presentation Structure
+  }}}
+  
+  \tableofcontents
+  
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 3 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    What is Credit Card Fraud Detection? ML Models   
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: \textit{Fraud detection is a set of activities that are 
+    taken to prevent money or property from being obtained through false 
+    pretenses.}
+
+    \begin{enumerate}
+    \item Clone transactions - Human error or real fraud?
+    \item Account theft and suspicious transactions - Anomaly detection in client payments.
+    \item False application fraud in another person’s name - Anomaly detection.
+    \item Credit card skimming - Classification techniques based on hardware, 
+    geolocation, and information about a client’s behavior patterns.
+    \item Account takeover - Neural networks or pattern recognition.
+    \end{enumerate}
+
+    \textbullet \: Requirements for payment fraud detection with ML-based algorithms:
+
+    \begin{enumerate}
+    \item Amount of data - Dimensionality reduction or data augmentation techniques.
+    \item Quality of data - To avoid major bias in model's results.
+    \item Integrity factors - Business logic is paired nicely with the Machine Learning model. 
+    \end{enumerate}
+
+    \textbullet \: Methods:
+    
+    \begin{enumerate}
+    \item Unsupervised - PCA (tighter feature space), LOF, One-class SVM, and
+    Isolation Forest (anomaly).
+    \item Supervised - KNN, XGBoost, Random Forest (fraudulent or genuine?). 
+    \end{enumerate}
+
+    \textbullet \: It is very important to train the fraud detection model 
+    continuously whenever new data arrives.
+
+    Source: \url{https://spd.group/machine-learning/credit-card-fraud-detection/}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 4 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Conventional and ML-Based Credit Card Fraud Detection  
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Conventional Fraud Detection:
+
+    \begin{enumerate}
+      \item The rules of making a decision on determining schemes should be set manually.
+      \item Takes an enormous amount of time.
+      \item Multiple verification methods are needed; thus, inconvenient for the user.
+      \item Finds only obvious fraud activities. 
+    \end{enumerate}
+    
+    \textbullet \: Machine Learning-based Fraud Detection:
+
+    \begin{enumerate}
+      \item Detecting fraud automatically.
+      \item Real-time streaming.
+      \item Less time needed for verification methods.
+      \item Identifying hidden correlations in data. 
+    \end{enumerate}
+
+    Source: \url{https://spd.group/machine-learning/credit-card-fraud-detection/}
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Tools}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 5 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Computing Resources
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Python3 and Linux.
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=1.075\linewidth, keepaspectratio]{tools.png}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Data}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 6 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Exploratory Data Analysis
+  }}} 
+
+  \scriptsize{  
+    \begin{columns}
+      \column{0.55\linewidth}
+      
+      \textbullet \: \textit{The datasets contains transactions made by credit 
+      cards in September 2013 by european cardholders ... It contains only 
+      numerical input variables which are the result of a PCA transformation. 
+      Unfortunately, due to confidentiality issues, we cannot provide the 
+      original features and more background information about the data.} \\[0.05cm]
+
+      \textbullet \: Total of \textbf{30} features and \textbf{284807} 
+      instances. \\[0.05cm]
+  
+      \textbullet \: Most features come from principal components obtained by 
+      means of PCA (\textbf{V1}, \textbf{V2}, ..., \textbf{V28}), along with 
+      two other original ones: \textbf{Time} and \textbf{Amount}. \\[0.05cm]
+  
+      \textbullet \: Data show a small number of duplicated instances: 
+      \textbf{1081} ($\approx$ \textbf{0.38\%}). \\[0.05cm]
+  
+      \textbullet \: Highly unbalanced data set: $\approx$ \textbf{99.83\%} are 
+      genuine transactions and only $\approx$ \textbf{0.17\%} are fraudulent ones 
+      ($\approx$ \textbf{1 to 590}).
+
+      \column{0.60\linewidth}
+
+      \begin{figure}[h!]
+        \centering
+        \includegraphics[width=\linewidth, keepaspectratio]{challenge1.jpg}
+      \end{figure}
+
+    \end{columns}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 7 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Exploratory Data Analisys
+  }}} 
+
+  \vspace{0.15cm}
+
+  \scriptsize{  
+
+    \textbullet \: \textbf{V11}, \textbf{V10}, \textbf{V12}, \textbf{V14}, 
+    and \textbf{V17} they have the highest univariate dependencies with the 
+    target, as estimated from mutual information.
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.825\linewidth, keepaspectratio]{challenge2.jpg}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 8 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Exploratory Data Analisys
+  }}} 
+
+  \vspace{0.15cm}
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.93\textheight, keepaspectratio]{challenge3.jpg}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 9 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Exploratory Data Analisys
+  }}} 
+
+  \vspace{0.15cm}
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.93\textheight, keepaspectratio]{challenge4.jpg}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 10 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Exploratory Data Analisys
+  }}} 
+
+  \vspace{0.15cm}
+
+  \scriptsize{  
+
+    \textbullet \: The entire data set correspond to \textbf{two} days of 
+    transactions. We did \textbf{not} consider this problem as a time series 
+    forecasting problem. Create date time index \textit{assuming} first time 
+    step at \textbf{00h00min00sec} in day \textbf{2013-09-01}. 
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.825\textwidth, keepaspectratio]{challenge5.jpg} \\
+      \includegraphics[width=0.825\textwidth, keepaspectratio]{challenge6.jpg} \\
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 11 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Stratified Data Split
+  }}} 
+
+  \vspace{0.15cm}
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{data_split.png}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dummy Classifier}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 12 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Benchmark Model - Vote for The Most Frequent Class
+  }}} 
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.85\textheight, keepaspectratio]{challenge7.jpg}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Logistic Regression}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 13 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Training Logistic Regression
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Use all available features. \\[0.25cm]
+
+    \textbullet \: Exhaustive hyper parameter search with stratified \textbf{5-fold} 
+    cross validation using \textbf{Matthews correlation coefficient} for scoring. \\[0.25cm]
+
+    \textbullet \: Preprocessing steps in the pipeline: (1) Robust Scaler and 
+    (2) Yeo-Johnson Power Transform. \\[0.25cm]
+
+    \textbullet \: Search for best hyperparameter for inverse of regularization 
+    strength among \textbf{100} candidates (\textbf{C}).
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.55\textheight, keepaspectratio]{logreg_cross_validation.png}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 14 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Results for Logistic Regression
+  }}} 
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{logreg_results.jpg}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Decision Tree}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 15 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Training Decision Tree
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Use all available features. \\[0.25cm]
+
+    \textbullet \: Exhaustive hyper parameter search with stratified \textbf{5-fold} 
+    cross validation using \textbf{Matthews correlation coefficient} for scoring. \\[0.25cm]
+
+    \textbullet \: Search for the best hyperparameter set among \textbf{112} candidates, 
+    varying the function to measure the quality of a split (\textbf{criterion}), 
+    the strategy used to choose the split at each node (\textbf{splitter}), maximum 
+    depth of the tree (\textbf{max\_depth}), and the number of features to consider 
+    when looking for the best split (\textbf{max\_features}). 
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.60\textheight, keepaspectratio]{dectree_cross_validation.png}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 16 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Results for Decision Tree
+  }}} 
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{dectree_results.jpg}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{XGBoost}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 17 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Training XGBoost Classifier
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Use the 9 most important features according to the previous 
+    decision tree model: \textbf{V26}, \textbf{V27}, \textbf{V21}, \textbf{V8}, 
+    \textbf{V7}, \textbf{V16}, \textbf{V17}, \textbf{V10}, and \textbf{V14} \\[0.25cm]
+
+    \textbullet \: Exhaustive hyper parameter search with stratified \textbf{5-fold} 
+    cross validation using \textbf{Matthews correlation coefficient} for scoring. \\[0.25cm]
+
+    \textbullet \: Search for the best hyperparameter set among \textbf{32} candidates, 
+    varying the number of boosting rounds (\textbf{n\_estimators}), maximum tree depth, 
+    balancing of positive and negative weights 
+    (\textbf{scale\_pos\_weight}), boosting learning rate (\textbf{learning\_rate}), 
+    L1 regularization term on weights (\textbf{reg\_alpha}), and L2 regularization term 
+    on weights (\textbf{reg\_lambda}).
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.50\textheight, keepaspectratio]{xgboos_cross_validation.png}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 18 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Results for XGBoost Classifier
+  }}} 
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{xgboos_results.jpg}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Random Forest}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 19 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Training Random Forest
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: Same configuration as XGBoost Classifier model. \\[0.25cm]
+
+    \textbullet \: Use the 9 most important features according to the previous 
+    decision tree model: \textbf{V26}, \textbf{V27}, \textbf{V21}, \textbf{V8}, 
+    \textbf{V7}, \textbf{V16}, \textbf{V17}, \textbf{V10}, and \textbf{V14} \\[0.25cm]
+
+    \textbullet \: Exhaustive hyper parameter search with stratified \textbf{5-fold} 
+    cross validation using \textbf{Matthews correlation coefficient} for scoring. \\[0.25cm]
+
+    \textbullet \: Search for the best hyperparameter set among \textbf{32} candidates, 
+    varying the number of boosting rounds (\textbf{n\_estimators}), maximum tree depth, 
+    balancing of positive and negative weights 
+    (\textbf{scale\_pos\_weight}), boosting learning rate (\textbf{learning\_rate}), 
+    L1 regularization term on weights (\textbf{reg\_alpha}), and L2 regularization term 
+    on weights (\textbf{reg\_lambda}).
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[height=0.48\textheight, keepaspectratio]{ranfor_cross_validation.png}
+    \end{figure}
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 20 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Results for Random Forest
+  }}} 
+
+  \scriptsize{  
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{ranfor_results.jpg}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conclusions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%% Slide 21 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Comparing all Models
+  }}} 
+
+  \scriptsize{  
+
+    \textbullet \: We test \textbf{five} machine learning models: (1) a benchmark dummy 
+    classifier that votes for the most frequent class, (2) logistic regression, 
+    (3) decision tree, (4) XGBoost classifier, and (5) Random Forest. \\[0.25cm]
+  
+    \textbullet \: All models take about the same time to to be trained 
+    (\textbf{from 1 to 6 min}) on a machine with \textbf{64GB RAM} and 
+    \textbf{40 cores}. \\[0.25cm]
+  
+    \textbullet \: Compare these models using the following classification metrics: 
+    (1) \textbf{Matthews correlation coefficient}, (2) accuracy, 
+    (3) \textbf{balanced accuracy}, (4) precision, (5) recall, (6) \textbf{F1 score}, 
+    (7) \textbf{area under the ROC curve}, (8) \textbf{area under the precision-recall curve}, 
+    and (9) Jaccard score.
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=\textwidth, keepaspectratio]{all_models.png}
+    \end{figure}  
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 22 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    Final Comments
+  }}} 
+
+  \scriptsize{  
+
+  \textbullet \: Machine learning models are very useful in credit card 
+  fraud detection. \\[0.25cm]
+
+  \textbullet \: Due to the comparatively small data size (only two days), we 
+  did not approach the task for credit card fraud detection as a time series 
+  forecasting problem, so that we were able to use cross validation without 
+  temporal blocking. \\[0.25cm]
+
+  \textbullet \: The overall performance of tree-based models are better than the 
+  logistic regression's one. Decision tree and boosting had the best scoring metrics
+   on test data set among all models, and the latter was slightly better. Thus, our 
+   best-of-all model is \textbf{XGBoost Classifier}. \\[0.25cm]
+
+  \textbullet \: According to the Kaggle recommendation of using Area Under the ROC Curve 
+  (\textbf{AUC}) to evaluate models, we could see that 
+  \textbf{our best models had similar or even better performances} of AUC score on test 
+  data set when compared to some public available solutions uploaded on Kaggle's 
+  platform. \\[0.25cm]
+
+  \textbullet \: Future work suggestions: Boosting with Bayesian hyper parameter 
+  search, or neural networks.
+
+  }
+\end{frame}
+
+%%%%%%%%%% Slide 23 %%%%%%%%%%
+\begin{frame}[fragile]
+  \frametitle{\normalsize{\textbf{
+    The End
+  }}} 
+
+  \section{}
+  \begin{center}
+    \huge{Thank You !}
+  \end{center}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
